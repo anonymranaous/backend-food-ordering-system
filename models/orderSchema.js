@@ -26,7 +26,8 @@
 const mongoose = require('mongoose');
 const User = require('./userSchema')
 const Dish = require('./dishesSchema')
-const Schema= mongoose.Schema({
+const Category = require('./categorySchema')
+const orderSchema= mongoose.Schema({
     status:{
         type:Number,
         required:true
@@ -56,7 +57,7 @@ const Schema= mongoose.Schema({
         {
         dish_id:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:'Dish',
+            ref:Dish,
             required:true
         },
         quantity:{
@@ -67,5 +68,5 @@ const Schema= mongoose.Schema({
     }]
 });
 
-const Order = mongoose.model('Order',Schema);
+const Order = mongoose.model('Order',orderSchema);
 module.exports = Order;

@@ -16,7 +16,7 @@
 const mongoose = require('mongoose');
 const Category = require('./categorySchema.js')
 
-const Schema= mongoose.Schema({
+const dishSchema= mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -27,7 +27,7 @@ const Schema= mongoose.Schema({
     },
     image:{
         type : String,
-        required:true
+        // required:true
     },
     price:{
         type:Number,
@@ -47,7 +47,7 @@ const Schema= mongoose.Schema({
     },
     category_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Category',
+        ref:Category,
         required:true
     },
     in_stock:{
@@ -57,6 +57,6 @@ const Schema= mongoose.Schema({
     ingredients:[String]
 });
 
-const Dish = mongoose.model('Dish',Schema);
+const Dish = mongoose.model('Dish',dishSchema);
 module.exports = Dish;
 

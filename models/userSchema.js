@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
 const Order = require('./orderSchema.js')
 //==============================================================================
 const userSchema = new mongoose.Schema({       
-    username: {
-        type: String,
+
+    userName: {
+        types: String,
         required: true,
-        unique: true
+        trim: true,
+        min: 3,
+        max: 25
     },
     mobileNumber: {
-        type: String,
+        types: String,
         required: true,
         unique: true, 
         validate: {
@@ -19,30 +23,43 @@ const userSchema = new mongoose.Schema({
         }
     },
     email: {
-        type: String,
+        types: String,
         unique : true
     },
-    password: {
-        type: String,
+    hash_password: {
+        types: String,
         required: true,
     },
     address : [
         {
-        type : String,
+        types : String,
         required : true,
         }
     ],
     isAdmin : {
-        type : Boolean,
+        types : Boolean,
         default : false
     },
-    orders : [
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'Order'   
-       }
-    ]
-})
+    orders : [{
+            types : mongoose.Schema.Types.ObjectId,
+            ref : Order
+       }]
+},
+{timeStamps: true});
+
+userSchema.virtual("password").set(function (password){
+    this.hash_password = bcrypt.hashSync(password, 10);
+});
+
+// userSchema.virtual("fullName").get(function() {
+//     return `${this.userName}`;
+// });
+userSchema.methods = {
+    authenticate: function (password){
+        return bcrypt.compareSync(password, this.hash_password);
+    }
+};
 //===================================================================================
-const User = mongoose.model('user', userSchema)                          
-module.exports = User                
+
+module.exports = mongoose.model('User', userSchema);                          
+             

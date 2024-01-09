@@ -11,7 +11,7 @@
 const mongoose = require('mongoose');
 const User = require('./userSchema')
 const Order = require('./orderSchema')
-const Schema= mongoose.Schema({
+const paymentSchema= mongoose.Schema({
     payment_id:{
         type:Number,
         required:true
@@ -22,12 +22,12 @@ const Schema= mongoose.Schema({
     },
     user_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
+        ref:User,
         required:true
     },
     order_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Order',
+        ref:Order,
         required:true
     },
     created_at:{
@@ -35,6 +35,6 @@ const Schema= mongoose.Schema({
         default:Date.now
     },
 });
-const Payment = mongoose.model('Payment',Schema);
+const Payment = mongoose.model('Payment',paymentSchema);
 
 module.exports = Payment;

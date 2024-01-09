@@ -12,7 +12,7 @@
 // },
 
 const mongoose = require('mongoose');
-const Schema= mongoose.Schema({
+const categorySchema= mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -23,8 +23,8 @@ const Schema= mongoose.Schema({
     },
     image:{
         data:Buffer,
-        contentType:String,
-        required:true
+        // contentType:String,
+        // required:true
     },
     created_at:{
         type:Date,
@@ -40,5 +40,5 @@ const Schema= mongoose.Schema({
     },
 });
 
-const Category = mongoose.model('CategorySchema',Schema);
+const Category = mongoose.model('CategorySchema',categorySchema);
 module.exports = Category;
